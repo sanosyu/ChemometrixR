@@ -28,3 +28,29 @@ SG <- function(x, m, p, n){
 }
 
 
+PP_pipe <- function(x, step){
+  # preprocessing of spectrum data
+  # x: data, query align to row
+  # step: vector of preprocessing and their parameters like c('smooth_p_n', 'sg_m_p_n', 'snv')
+  
+  res <- x
+  for (i in 1:length(step)){
+    type <- unlist(strsplit(step[i], split = '_'))
+    if(type[1] == 'snv')    res <- SNV(res)
+    if(type[1] == 'sg')     res <- SG(res, as.numeric(type[2]), as.numeric(type[3]), as.numeric(type[4]))
+  }
+  return(res)
+}
+
+
+SFD <- function(x, n){
+  # spectral fluctuation dividing
+  #
+  # x: data, query align to row
+  # n: window size
+  
+  SD <- apply(x, 2, sd)
+  
+}
+
+
